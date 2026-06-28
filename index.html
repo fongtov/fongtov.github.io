@@ -4,60 +4,414 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fongtov Portraits</title>
+  <title>Fongtov Portraits | Cinematic Street Portraits</title>
 
   <style>
+    :root {
+      --bg: #070707;
+      --bg-soft: #111111;
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --card: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.16);
+      --accent: #f5c16c;
+      --accent-2: #ffffff;
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
-      background-color: #f5f5f5;
-      color: #222;
+      overflow-x: hidden;
     }
 
-    header {
-      background-color: #111;
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(245, 193, 108, 0.20), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.10), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(245, 193, 108, 0.10), transparent 35%);
+      z-index: -3;
     }
 
-    header h1 {
-      font-size: 44px;
-      margin-bottom: 10px;
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
 
-    header p {
-      font-size: 20px;
-      max-width: 700px;
-      margin: 0 auto 25px auto;
+    a {
+      color: inherit;
     }
 
-    .button {
-      display: inline-block;
-      background-color: white;
-      color: #111;
-      padding: 14px 24px;
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 7%;
+      background: rgba(7, 7, 7, 0.62);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+      transition: color 0.25s ease;
     }
 
-    section {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 40px 25px;
-      background-color: white;
-      border-radius: 12px;
+    .nav-links a:hover {
+      color: var(--text);
     }
 
-    h2 {
-      margin-top: 0;
-      color: #111;
+    .nav-cta {
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text) !important;
+      background: rgba(255,255,255,0.08);
     }
 
-    ul {
-      padding-left: 22px;
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 130px 7% 90px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.86)),
+        url("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=80");
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(100%) contrast(1.05);
+      transform: scale(1.08);
+      z-index: -3;
+      animation: slowZoom 18s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 70vw;
+      height: 70vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,193,108,0.18), transparent 60%);
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -2;
+      animation: floatGlow 7s ease-in-out infinite alternate;
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.13); }
+    }
+
+    @keyframes floatGlow {
+      from { opacity: 0.45; transform: translateX(-50%) translateY(0); }
+      to { opacity: 0.75; transform: translateX(-50%) translateY(30px); }
+    }
+
+    .hero-content {
+      max-width: 980px;
+      text-align: center;
+      animation: fadeUp 1s ease both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+    }
+
+    .hero-text {
+      max-width: 720px;
+      margin: 26px auto 34px;
+      color: #e6e6e6;
+      font-size: clamp(18px, 2vw, 24px);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 0.25s ease, background 0.25s ease, border 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      background: var(--accent-2);
+      color: #080808;
+      box-shadow: 0 18px 50px rgba(255,255,255,0.18);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .scroll-note {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: 95px 7%;
+    }
+
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin: 0 0 18px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 18px;
+      margin-bottom: 34px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 35%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .number {
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .photo-panel {
+      min-height: 520px;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.75)),
+        url("https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-panel::after {
+      content: "Street mood. Real light. Natural confidence.";
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .pill {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(245,193,108,0.16);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price {
+      font-size: 44px;
+      letter-spacing: -0.06em;
+      margin: 8px 0 10px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .video-shell {
+      overflow: hidden;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background: #000;
+      box-shadow: var(--shadow);
     }
 
     .video-container {
@@ -65,24 +419,101 @@
       padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
-      margin-top: 20px;
-      border-radius: 12px;
-      background-color: #ddd;
     }
 
     .video-container iframe {
       position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      left: 0;
-      top: 0;
       border: 0;
     }
 
-    footer {
+    .video-placeholder {
+      padding: 18px 22px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.06);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .final-cta {
       text-align: center;
-      padding: 30px;
-      color: #666;
+      padding: 110px 7%;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(245,193,108,0.20), transparent 34%),
+        linear-gradient(to bottom, #070707, #111111);
+    }
+
+    .final-cta h2 {
+      font-size: clamp(38px, 6vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      margin: 0 0 18px;
+    }
+
+    .final-cta p {
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      font-size: 18px;
+    }
+
+    footer {
+      padding: 34px 7%;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .grid,
+      .split,
+      .packages {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-panel {
+        min-height: 390px;
+      }
+
+      .section {
+        padding: 72px 6%;
+      }
+
+      footer {
+        display: block;
+      }
     }
   </style>
 
@@ -90,71 +521,216 @@
 
 <body>
 
-  <header>
-    <h1>Fongtov Portraits</h1>
-    <p>Natural street-style portraits for students and young professionals who want authentic photos without awkward studio pressure.</p>
-    <a class="button" href="https://calendly.com/YOUR-LINK">Book a Session</a>
+  <nav class="nav">
+    <div class="logo">Fongtov</div>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#packages">Packages</a>
+      <a href="#pitch">Pitch</a>
+      <a class="nav-cta" href="https://calendly.com/YOUR-LINK">Book</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="eyebrow"><span class="dot"></span> Cinematic street portraits</div>
+      <h1>Real portraits.<br>Without the studio pressure.</h1>
+      <p class="hero-text">
+        Fongtov Portraits offers natural outdoor photo sessions for students and young professionals who need authentic pictures for LinkedIn, dating apps, portfolios, and social media.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://calendly.com/YOUR-LINK">Book a Session</a>
+        <a class="btn btn-secondary" href="#pitch">Watch the Pitch</a>
+      </div>
+    </div>
+    <div class="scroll-note">Scroll to explore</div>
   </header>
 
-  <section>
-    <h2>The Problem</h2>
-    <p>
-      Many students and young professionals need good personal photos for LinkedIn,
-      dating apps, social media, portfolios, or personal branding. However, traditional
-      studio photoshoots can feel expensive, staged, and uncomfortable.
-    </p>
-  </section>
-
-  <section>
-    <h2>Our Solution</h2>
-    <p>
-      Fongtov Portraits offers relaxed outdoor portrait sessions in real urban environments.
-      The goal is to create natural, confident, and authentic photos through a low-pressure
-      street photography experience.
-    </p>
-  </section>
-
-  <section>
-    <h2>Benefits</h2>
-    <ul>
-      <li>Natural street-style portraits</li>
-      <li>Affordable sessions from around €50–60</li>
-      <li>Relaxed outdoor shooting atmosphere</li>
-      <li>Useful photos for LinkedIn, dating apps, social media, and portfolios</li>
-      <li>Easy booking through Calendly</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Watch the Pitch</h2>
-    <p>
-      This video introduces the idea behind Fongtov Portraits and explains how the service works.
-    </p>
+  <main>
 
 ```
-<div class="video-container">
-  <iframe 
-    src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-    title="Fongtov Portraits Pitch Video"
-    allowfullscreen>
-  </iframe>
-</div>
+<section class="section" id="problem">
+  <div class="section-inner reveal">
+    <span class="number">01 / Problem Hypothesis</span>
+    <h2 class="section-title">Good photos matter, but photoshoots often feel awkward.</h2>
+    <p class="section-lead">
+      Many students and young professionals need strong personal images for online profiles, applications, creative portfolios, and social platforms. However, traditional studio sessions can feel too formal, too expensive, and too uncomfortable for people who do not like posing.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Too staged</h3>
+        <p>Studio portraits can look professional, but sometimes they feel stiff and unnatural.</p>
+      </div>
+      <div class="card">
+        <h3>Too expensive</h3>
+        <p>Many young people want quality photos but do not want to pay premium studio prices.</p>
+      </div>
+      <div class="card">
+        <h3>Too much pressure</h3>
+        <p>People often feel nervous in front of the camera because they do not know how to pose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="solution">
+  <div class="section-inner split reveal">
+    <div>
+      <span class="number">02 / Solution Hypothesis</span>
+      <h2 class="section-title">A relaxed street-style portrait experience.</h2>
+      <p class="section-lead">
+        Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of forcing people into a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic images.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="pill">1</div>
+          <div>
+            <strong>Choose a session</strong>
+            <p>Book an affordable portrait slot through Calendly.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="pill">2</div>
+          <div>
+            <strong>Shoot outside</strong>
+            <p>Meet in an urban location and shoot in a casual, low-pressure way.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="pill">3</div>
+          <div>
+            <strong>Receive edited photos</strong>
+            <p>Get natural portraits that can be used for LinkedIn, dating apps, portfolios, and social media.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-panel"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner reveal">
+    <span class="number">03 / Benefits</span>
+    <h2 class="section-title">Why it works for the target group.</h2>
+    <p class="section-lead">
+      The service sits between casual smartphone pictures and expensive studio photography: more professional than random phone photos, but more relaxed and accessible than a traditional photoshoot.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Authentic</h3>
+        <p>Urban environments make the portraits feel more natural and personal.</p>
+      </div>
+      <div class="card">
+        <h3>Accessible</h3>
+        <p>Mini-sessions from around €50–60 make the service realistic for students and young professionals.</p>
+      </div>
+      <div class="card">
+        <h3>Easy to book</h3>
+        <p>The landing page and Calendly link make the MVP simple to test and validate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="packages">
+  <div class="section-inner reveal">
+    <span class="number">04 / MVP Offer</span>
+    <h2 class="section-title">Simple first packages.</h2>
+    <p class="section-lead">
+      These packages are designed as an MVP to test whether people are willing to book casual outdoor portrait sessions.
+    </p>
+
+    <div class="packages">
+      <div class="card">
+        <h3>Mini Portrait</h3>
+        <div class="price">€50</div>
+        <p>Short outdoor session for people who need a few strong personal photos.</p>
+        <p class="small">Ideal for LinkedIn, dating apps, and social media.</p>
+      </div>
+
+      <div class="card">
+        <h3>Street Session</h3>
+        <div class="price">€60</div>
+        <p>A relaxed urban portrait experience with more variety in location and mood.</p>
+        <p class="small">Best MVP package for early customers.</p>
+      </div>
+
+      <div class="card">
+        <h3>Creative Add-on</h3>
+        <div class="price">+€15</div>
+        <p>Extra edited photos or a more cinematic color-grading style.</p>
+        <p class="small">Optional upsell after validation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pitch">
+  <div class="section-inner reveal">
+    <span class="number">05 / Pitch Video</span>
+    <h2 class="section-title">Watch the 45-second MVP pitch.</h2>
+    <p class="section-lead">
+      The pitch video explains the value proposition, target audience, and call-to-action for Fongtov Portraits.
+    </p>
+
+    <div class="video-shell">
+      <div class="video-container">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID"
+          title="Fongtov Portraits Pitch Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-placeholder">
+        Replace YOUR_VIDEO_ID with your real YouTube video ID after uploading the pitch video.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="book">
+  <div class="reveal">
+    <span class="number">06 / Call to Action</span>
+    <h2>Ready for portraits that feel like you?</h2>
+    <p>
+      Book a relaxed outdoor portrait session and help test the first version of Fongtov Portraits.
+    </p>
+    <a class="btn btn-primary" href="https://calendly.com/YOUR-LINK">Book through Calendly</a>
+  </div>
+</section>
 ```
 
-  </section>
-
-  <section>
-    <h2>Book Your Portrait Session</h2>
-    <p>
-      Interested in testing the first version of Fongtov Portraits? Book a short session
-      or discovery call through Calendly.
-    </p>
-    <a class="button" href="https://calendly.com/YOUR-LINK">Book through Calendly</a>
-  </section>
+  </main>
 
   <footer>
-    <p>© 2026 Fongtov Portraits. MVP landing page for IBB-620 Entrepreneurship & Valuation.</p>
+    <div>© 2026 Fongtov Portraits</div>
+    <div>GitHub Pages MVP landing page for IBB-620 Entrepreneurship & Valuation</div>
   </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    revealElements.forEach((element) => observer.observe(element));
+  </script>
 
 </body>
 </html>
