@@ -309,6 +309,48 @@
       margin: 0;
     }
 
+.problem-card {
+  min-height: 390px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.problem-card h3 {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+.problem-visual {
+  flex: 1;
+  min-height: 290px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.staged-visual {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80");
+}
+
+.expensive-visual {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1579621970795-87facc2f976d?auto=format&fit=crop&w=900&q=80");
+}
+
+.pressure-visual {
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
+    url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80");
+}
+    
     .number {
       color: var(--accent);
       font-size: 13px;
@@ -552,24 +594,28 @@
 ```
 <section class="section" id="problem">
   <div class="section-inner reveal">
-    <span class="number">01 / Problem Hypothesis</span>
-    <h2 class="section-title">Good photos matter, but photoshoots often feel awkward.</h2>
+    <span class="number">01. Problem Hypothesis</span>
+    <h2 class="section-title">Good photos matter, but is it good enough if your smile isn't real?</h2>
     <p class="section-lead">
-      Many students and young professionals need strong personal images for online profiles, applications, creative portfolios, and social platforms. However, traditional studio sessions can feel too formal, too expensive, and too uncomfortable for people who do not like posing.
+      Many students and young professionals need strong personal images for online profiles, applications, creative portfolios, and social platforms. However, traditional studio sessions can feel too formal, too expensive, and too uncomfortable for people who do not feel comfortable posing.
     </p>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Too staged</h3>
-        <p>Studio portraits can look professional, but sometimes they feel stiff and unnatural.</p>
-      </div>
-      <div class="card">
-        <h3>Too expensive</h3>
-        <p>Many young people want quality photos but do not want to pay premium studio prices.</p>
-      </div>
-      <div class="card">
-        <h3>Too much pressure</h3>
-        <p>People often feel nervous in front of the camera because they do not know how to pose.</p>
+    <div class="grid problem-grid">
+  <article class="card problem-card">
+    <h3>Too staged</h3>
+    <div class="problem-visual staged-visual" role="img" aria-label="A stiff portrait pose under a bright studio spotlight."></div>
+  </article>
+
+  <article class="card problem-card">
+    <h3>Too expensive</h3>
+    <div class="problem-visual expensive-visual" role="img" aria-label="Coins falling out of an empty wallet."></div>
+  </article>
+
+  <article class="card problem-card">
+    <h3>Too much pressure</h3>
+    <div class="problem-visual pressure-visual" role="img" aria-label="A nervous person sweating in front of a camera."></div>
+  </article>
+</div>
       </div>
     </div>
   </div>
@@ -578,7 +624,7 @@
 <section class="section" id="solution">
   <div class="section-inner split reveal">
     <div>
-      <span class="number">02 / Solution Hypothesis</span>
+      <span class="number">02. Solution Hypothesis</span>
       <h2 class="section-title">A relaxed street-style portrait experience.</h2>
       <p class="section-lead">
         Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of forcing people into a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic images.
@@ -617,7 +663,7 @@
 
 <section class="section">
   <div class="section-inner reveal">
-    <span class="number">03 / Benefits</span>
+    <span class="number">03. Benefits</span>
     <h2 class="section-title">Why it works for the target group.</h2>
     <p class="section-lead">
       The service sits between casual smartphone pictures and expensive studio photography: more professional than random phone photos, but more relaxed and accessible than a traditional photoshoot.
@@ -642,7 +688,7 @@
 
 <section class="section" id="packages">
   <div class="section-inner reveal">
-    <span class="number">04 / MVP Offer</span>
+    <span class="number">04. MVP Offer</span>
     <h2 class="section-title">Simple first packages.</h2>
     <p class="section-lead">
       These packages are designed as an MVP to test whether people are willing to book casual outdoor portrait sessions.
@@ -675,7 +721,7 @@
 
 <section class="section" id="pitch">
   <div class="section-inner reveal">
-    <span class="number">05 / Pitch Video</span>
+    <span class="number">05. Pitch Video</span>
     <h2 class="section-title">Watch the 45-second MVP pitch.</h2>
     <p class="section-lead">
       The pitch video explains the value proposition, target audience, and call-to-action for Fongtov Portraits.
@@ -699,7 +745,7 @@
 
 <section class="final-cta" id="book">
   <div class="reveal">
-    <span class="number">06 / Call to Action</span>
+    <span class="number">06. Call to Action</span>
     <h2>Ready for portraits that feel like you?</h2>
     <p>
       Book a relaxed outdoor portrait session and be a part of Fongtov Portraits.
